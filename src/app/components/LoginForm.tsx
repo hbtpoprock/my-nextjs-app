@@ -2,9 +2,12 @@
 
 import React, { useState } from "react";
 import { Form, Input, Button, message } from "antd";
+import { useRouter } from "next/navigation";
 
 const LoginForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
   const onFinish = async (values: { username: string; password: string }) => {
     setLoading(true);
     try {
@@ -15,7 +18,8 @@ const LoginForm: React.FC = () => {
       });
       if (response.ok) {
         const data = await response.json();
-        message.success("Login successful!");
+        message.success(data.message);
+        router.push("/profile");
 
         // Handle successful login, e.g., store tokens, redirect user
       } else {

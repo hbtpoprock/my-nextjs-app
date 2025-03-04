@@ -10,10 +10,19 @@ export async function POST(request: NextRequest) {
   });
 
   if (apiResponse.ok) {
-    const data = await apiResponse.json();
+    const { access_token } = await apiResponse.json();
+    const response = NextResponse.json({ message: "Login successful" });
 
-    // Handle successful login, e.g., store tokens, redirect user
-    return NextResponse.json(data);
+    response.cookies.set("auth_token", access_token, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+      path: "/",
+    });
+    // const result = request.cookies.get("auth_token")?.value;
+    // console.log("result", result);
+
+    return response;
   } else {
     const errorData = await apiResponse.json();
     return NextResponse.json(
