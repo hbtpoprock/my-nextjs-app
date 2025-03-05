@@ -25,9 +25,10 @@ function SearchUsers() {
         const response = await fetch(
           `/api/search-users?query=${query}&page=${page}&limit=${limit}`
         );
-        const data = await response.json();
-        setUsers(data.users);
-        setTotal(data.total);
+
+        const result = await response.json();
+        setUsers(result.data);
+        setTotal(result.totalItems);
       } catch (error) {
         console.error("Error fetching users:", error);
       } finally {

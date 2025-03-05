@@ -6,7 +6,7 @@ import SearchUsers from "../components/SearchUsers";
 const ProfilePage: React.FC = () => {
   return (
     <div>
-      <h1>User Search</h1>
+      <h1>Search Users</h1>
       <SearchUsers />
     </div>
   );
