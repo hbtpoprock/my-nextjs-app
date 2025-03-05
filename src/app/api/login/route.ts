@@ -19,8 +19,6 @@ export async function POST(request: NextRequest) {
       sameSite: "lax",
       path: "/",
     });
-    // const result = request.cookies.get("auth_token")?.value;
-    // console.log("result", result);
 
     return response;
   } else {
