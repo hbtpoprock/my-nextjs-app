@@ -5,7 +5,7 @@ import { Form, Input, Button, message } from "antd";
 import { useRouter } from "next/navigation";
 
 const LoginForm: React.FC = () => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
   const onFinish = async (values: { username: string; password: string }) => {
