@@ -75,13 +75,15 @@ const styles: { [key: string]: React.CSSProperties } = {
   container: {
     display: "flex",
     justifyContent: "center",
-    alignItems: "center",
+    // alignItems: "center",
     height: "100vh",
     padding: "20px",
+    marginTop: "5vh",
   },
   card: {
     width: "300px",
     textAlign: "center",
+    border: "none",
   },
   avatar: {
     marginBottom: "16px",
