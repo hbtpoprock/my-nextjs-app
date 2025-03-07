@@ -18,13 +18,13 @@ export default function Dashboard() {
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider
-        width={300}
+        width={250}
         breakpoint="lg"
-        collapsedWidth="80" // Set a non-zero value to allow collapsing
+        collapsedWidth="64"
         collapsible
         collapsed={collapsed}
         onCollapse={setCollapsed}
-        trigger={null} // Disable the default trigger
+        trigger={null}
         style={{
           background: "#fff",
           borderRight: "1px solid #ccc",
@@ -37,7 +37,8 @@ export default function Dashboard() {
             onClick={toggleSidebar}
           />
         </div>
-        <UserProfile />
+        {/* Pass the collapsed state to UserProfile */}
+        <UserProfile collapsed={collapsed} />
       </Sider>
       <Layout>
         <Content style={{ padding: "20px" }}>

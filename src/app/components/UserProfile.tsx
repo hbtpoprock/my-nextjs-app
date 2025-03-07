@@ -7,7 +7,11 @@ import { UserOutlined } from "@ant-design/icons";
 
 const { Title, Text } = Typography;
 
-const UserProfile: React.FC = () => {
+interface UserProfileProps {
+  collapsed: boolean;
+}
+
+const UserProfile: React.FC<UserProfileProps> = ({ collapsed }) => {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
@@ -41,6 +45,11 @@ const UserProfile: React.FC = () => {
 
     fetchUserProfile();
   }, [router]);
+
+  if (collapsed) {
+    // Return null or a placeholder when collapsed
+    return null;
+  }
 
   if (loading) {
     return (
