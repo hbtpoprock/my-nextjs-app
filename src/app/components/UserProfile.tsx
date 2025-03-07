@@ -87,7 +87,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     // alignItems: "center",
     height: "100vh",
     padding: "20px",
-    marginTop: "5vh",
+    // marginTop: "5vh",
   },
   card: {
     width: "300px",
