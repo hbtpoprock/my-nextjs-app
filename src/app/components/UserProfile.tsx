@@ -8,7 +8,7 @@ import { UserOutlined } from "@ant-design/icons";
 const { Title, Text } = Typography;
 
 interface UserProfileProps {
-  collapsed: boolean;
+  collapsed?: boolean;
 }
 
 const UserProfile: React.FC<UserProfileProps> = ({ collapsed }) => {
