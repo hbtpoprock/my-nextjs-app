@@ -1,6 +1,6 @@
 "use client";
 
-import { Layout, Button, Menu } from "antd";
+import { Layout, Button } from "antd";
 import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
 import UserProfile from "../components/UserProfile";
 import SearchUsers from "../components/SearchUsers";
@@ -12,18 +12,19 @@ export default function Dashboard() {
   const [collapsed, setCollapsed] = useState(false);
 
   const toggleSidebar = () => {
-    setCollapsed(!collapsed);
+    setCollapsed((prevCollapsed) => !prevCollapsed);
   };
-  console.log("collapsed", collapsed);
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider
         width={300}
         breakpoint="lg"
-        collapsedWidth="0"
+        collapsedWidth="80" // Set a non-zero value to allow collapsing
         collapsible
         collapsed={collapsed}
         onCollapse={setCollapsed}
+        trigger={null} // Disable the default trigger
         style={{
           background: "#fff",
           borderRight: "1px solid #ccc",
