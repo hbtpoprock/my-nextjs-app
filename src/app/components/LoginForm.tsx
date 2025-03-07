@@ -19,7 +19,7 @@ const LoginForm: React.FC = () => {
       if (response.ok) {
         const data = await response.json();
         message.success(data.message);
-        router.push("/user-profile");
+        router.push("/dashboard");
 
         // Handle successful login, e.g., store tokens, redirect user
       } else {
