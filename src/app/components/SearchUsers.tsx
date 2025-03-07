@@ -64,8 +64,8 @@ function SearchUsers() {
           dataSource={users}
           renderItem={(user) => (
             <List.Item>
-              <Card title={user.name}>
-                <p>Username: {user.username}</p>
+              <Card title={`Username: ${user.username}`}>
+                <p>Name: {user.name}</p>
                 <p>Age: {user.age}</p>
               </Card>
             </List.Item>
