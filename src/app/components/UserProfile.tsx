@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { message, Card, Avatar, Typography, Spin } from "antd";
+import { App, Card, Avatar, Typography, Spin } from "antd";
 import { useRouter } from "next/navigation";
 import { UserOutlined } from "@ant-design/icons";
 
@@ -15,6 +15,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ collapsed }) => {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
+  const { message } = App.useApp(); // Access Ant Design's message API
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -29,7 +30,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ collapsed }) => {
         if (!response.ok) {
           const errorData = await response.json();
           message.error(`Error: ${errorData.message}`);
-          router.push("/"); // Redirect to the home page
+          // router.push("/"); // Redirect to the home page
           return;
         }
 
@@ -44,10 +45,9 @@ const UserProfile: React.FC<UserProfileProps> = ({ collapsed }) => {
     };
 
     fetchUserProfile();
-  }, [router]);
+  }, [router, message]);
 
   if (collapsed) {
-    // Return null or a placeholder when collapsed
     return null;
   }
 
@@ -69,13 +69,13 @@ const UserProfile: React.FC<UserProfileProps> = ({ collapsed }) => {
 
   return (
     <div style={styles.container}>
-      <Card style={styles.card}>
+      <div style={styles.card}>
         <Avatar size={64} icon={<UserOutlined />} style={styles.avatar} />
         <Title level={2}>{user.username}</Title>
         <Text>Name: {user.name}</Text>
         <br />
         <Text>Age: {user.age}</Text>
-      </Card>
+      </div>
     </div>
   );
 };
