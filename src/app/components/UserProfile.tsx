@@ -90,7 +90,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     // marginTop: "5vh",
   },
   card: {
-    width: "300px",
+    // width: "300px",
     textAlign: "center",
     border: "none",
   },
