@@ -31,7 +31,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
 
       if (response.ok) {
         const data = await response.json();
-        console.log("data", data);
         message.success(data.message);
         onClose(); // Close the modal on success
       } else {
