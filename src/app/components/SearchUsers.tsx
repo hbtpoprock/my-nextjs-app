@@ -44,24 +44,24 @@ const SearchUsers: React.FC = () => {
     setSelectedUserId(null); // Reset selected user ID
   };
 
+  const fetchUsers = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(
+        `/api/search-users?query=${query}&page=${page}&limit=${limit}`
+      );
+
+      const result = await response.json();
+      setUsers(result.data);
+      setTotal(result.totalItems);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchUsers = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch(
-          `/api/search-users?query=${query}&page=${page}&limit=${limit}`
-        );
-
-        const result = await response.json();
-        setUsers(result.data);
-        setTotal(result.totalItems);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchUsers();
   }, [query, page, limit]);
 
@@ -110,6 +110,7 @@ const SearchUsers: React.FC = () => {
                     visible={isUpdateModalVisible}
                     onClose={closeUpdateModal}
                     userId={user._id}
+                    onUserUpdated={fetchUsers} // Pass fetchUsers here
                   />
                 )}
                 {selectedUserId === user._id && (
@@ -117,6 +118,7 @@ const SearchUsers: React.FC = () => {
                     visible={isDeleteModalVisible}
                     onClose={closeDeleteModal}
                     userId={user._id}
+                    onUserUpdated={fetchUsers} // Pass fetchUsers here
                   />
                 )}
               </Card>

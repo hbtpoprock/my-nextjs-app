@@ -7,12 +7,14 @@ interface UpdateUserFormProps {
   visible: boolean;
   onClose: () => void;
   userId: string;
+  onUserUpdated: () => void;
 }
 
 const UpdateUserForm: React.FC<UpdateUserFormProps> = ({
   visible,
   onClose,
   userId,
+  onUserUpdated, // Receive the onUserUpdated callback
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [formValues, setFormValues] = useState<{
@@ -26,23 +28,29 @@ const UpdateUserForm: React.FC<UpdateUserFormProps> = ({
 
   const onFinish = async (values: { name: string; age: number }) => {
     setLoading(true);
+
+    const updatedValues: { name?: string; age?: number } = {};
+    if (values.name) updatedValues.name = values.name;
+    if (values.age !== null && values.age !== undefined)
+      updatedValues.age = Number(values.age);
     try {
       const response = await fetch(`/api/update-user/${userId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
+        body: JSON.stringify(updatedValues),
       });
 
       if (response.ok) {
         const data = await response.json();
         message.success(data.message);
         onClose(); // Close the modal on success
+        onUserUpdated(); // Trigger the re-fetch of users in the parent component
       } else {
         const errorData = await response.json();
         message.error(`Update failed: ${errorData.message}`);
       }
     } catch (error) {
-      message.error("An error occurred while updating.");
+      message.error("An error occurred while updating the user.");
     } finally {
       setLoading(false);
     }
