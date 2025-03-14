@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import { List, Card, Pagination, Input, Spin } from "antd";
+import { List, Card, Pagination, Input, Spin, Button } from "antd";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import UpdateUserForm from "./UpdateUserForm";
 
 const { Search } = Input;
 
@@ -10,13 +12,37 @@ interface User {
   age: number;
 }
 
-function SearchUsers() {
+const SearchUsers: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
   const [limit] = useState(10); // Items per page
+
+  const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState<string | null>(null); // Track the selected userId
+
+  const showUpdateModal = (userId: string) => {
+    setIsUpdateModalVisible(true);
+    setSelectedUserId(userId); // Set the userId for the selected user
+  };
+
+  const closeUpdateModal = () => {
+    setIsUpdateModalVisible(false);
+    setSelectedUserId(null); // Reset selected user ID
+  };
+
+  const showDeleteModal = (userId: string) => {
+    setIsDeleteModalVisible(true);
+    setSelectedUserId(userId); // Set the userId for the selected user
+  };
+
+  const closeDeleteModal = () => {
+    setIsDeleteModalVisible(false);
+    setSelectedUserId(null); // Reset selected user ID
+  };
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -67,6 +93,32 @@ function SearchUsers() {
               <Card title={`Username: ${user.username}`}>
                 <p>Name: {user.name}</p>
                 <p>Age: {user.age}</p>
+                <Button
+                  type="primary"
+                  onClick={() => showUpdateModal(user._id)}
+                  style={{ background: "#BA8E23" }}
+                  icon={<EditOutlined />}
+                ></Button>
+                <Button
+                  type="primary"
+                  danger={true}
+                  onClick={() => showDeleteModal(user._id)}
+                  icon={<DeleteOutlined />}
+                ></Button>
+                {selectedUserId === user._id && (
+                  <UpdateUserForm
+                    visible={isUpdateModalVisible}
+                    onClose={closeUpdateModal}
+                    userId={user._id}
+                  />
+                )}
+                {selectedUserId === user._id && (
+                  <UpdateUserForm
+                    visible={isDeleteModalVisible}
+                    onClose={closeDeleteModal}
+                    userId={user._id}
+                  />
+                )}
               </Card>
             </List.Item>
           )}
@@ -81,6 +133,6 @@ function SearchUsers() {
       />
     </div>
   );
-}
+};
 
 export default SearchUsers;
