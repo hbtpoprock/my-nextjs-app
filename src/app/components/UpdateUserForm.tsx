@@ -15,6 +15,13 @@ const UpdateUserForm: React.FC<UpdateUserFormProps> = ({
   userId,
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
+  const [formValues, setFormValues] = useState<{
+    name: string;
+    age: null | number;
+  }>({
+    name: "",
+    age: null,
+  });
   const { message } = App.useApp(); // Access Ant Design's message API
 
   const onFinish = async (values: { name: string; age: number }) => {
@@ -23,7 +30,6 @@ const UpdateUserForm: React.FC<UpdateUserFormProps> = ({
       const response = await fetch(`/api/update-user/${userId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        // body: JSON.stringify({ ...values, age: Number(values.age) }),
         body: JSON.stringify(values),
       });
 
@@ -33,10 +39,10 @@ const UpdateUserForm: React.FC<UpdateUserFormProps> = ({
         onClose(); // Close the modal on success
       } else {
         const errorData = await response.json();
-        message.error(`Update user failed: ${errorData.message}`);
+        message.error(`Update failed: ${errorData.message}`);
       }
     } catch (error) {
-      message.error("An error occurred during update user.");
+      message.error("An error occurred while updating.");
     } finally {
       setLoading(false);
     }
@@ -50,7 +56,19 @@ const UpdateUserForm: React.FC<UpdateUserFormProps> = ({
       onCancel={onClose}
       footer={null}
     >
-      <Form name={`update-user-`} onFinish={onFinish}>
+      <Form
+        name="update-user-form"
+        onFinish={onFinish}
+        onValuesChange={(changedValues, allValues) => {
+          if (changedValues.name) {
+            console.log("Name changed to:", changedValues.name);
+          }
+          if (changedValues.age) {
+            console.log("Age changed to:", changedValues.age);
+          }
+          setFormValues(allValues); // Track form values
+        }}
+      >
         <Form.Item
           name="name"
           rules={[{ required: false, message: "Please input your name!" }]}
@@ -64,7 +82,13 @@ const UpdateUserForm: React.FC<UpdateUserFormProps> = ({
           <Input type="number" placeholder="Age" />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit" loading={loading} block>
+          <Button
+            type="primary"
+            htmlType="submit"
+            loading={loading}
+            block
+            disabled={!formValues.name && !formValues.age} // Disable when both fields are empty
+          >
             Update
           </Button>
         </Form.Item>
