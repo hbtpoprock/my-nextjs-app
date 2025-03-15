@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { List, Card, Pagination, Input, Spin, Button } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import UpdateUserForm from "./UpdateUserForm";
+import DeleteUserForm from "./DeleteUserForm";
 
 const { Search } = Input;
 
@@ -114,11 +115,11 @@ const SearchUsers: React.FC = () => {
                   />
                 )}
                 {selectedUserId === user._id && (
-                  <UpdateUserForm
+                  <DeleteUserForm
                     visible={isDeleteModalVisible}
                     onClose={closeDeleteModal}
                     userId={user._id}
-                    onUserUpdated={fetchUsers} // Pass fetchUsers here
+                    onUserDeleted={fetchUsers} // Pass fetchUsers here
                   />
                 )}
               </Card>
