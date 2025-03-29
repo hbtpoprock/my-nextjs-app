@@ -3,7 +3,7 @@
 import React from "react";
 import SearchUsers from "../components/SearchUsers";
 
-const ProfilePage: React.FC = () => {
+const SearchUsersPage: React.FC = () => {
   return (
     <div>
       <h1>Search Users</h1>
@@ -12,4 +12,4 @@ const ProfilePage: React.FC = () => {
   );
 };
 
-export default ProfilePage;
+export default SearchUsersPage;
