@@ -2,12 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   // Retrieve the Bearer token from cookies
   const token = request.cookies.get("auth_token")?.value;
 
-  const { id } = await params; // Extract the userId from the URL params
+  const { id } = await context.params;
   const body = await request.json(); // Get the request body (updated user data)
 
   // Construct the URL of the external endpoint (e.g., the backend you are calling)
