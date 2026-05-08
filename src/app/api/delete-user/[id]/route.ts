@@ -2,13 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   // Retrieve the Bearer token from cookies
   const token = request.cookies.get("auth_token")?.value;
 
   // Extract the userId from the URL params
-  const { id } = await params;
+  const { id } = await context.params;
 
   // Construct the URL of the external endpoint (e.g., the backend you are calling)
   const externalUrl = `http://localhost:3000/user/${id}`;
