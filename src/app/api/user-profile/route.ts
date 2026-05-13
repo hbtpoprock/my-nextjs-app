@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
 
   try {
     // Fetch user profile data from the external API
-    const apiResponse = await fetch("http://localhost:3000/user/profile", {
+    const apiResponse = await fetch(`${process.env.BACKEND_URL}/user/profile`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

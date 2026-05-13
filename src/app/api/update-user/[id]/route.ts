@@ -11,7 +11,7 @@ export async function PATCH(
   const body = await request.json(); // Get the request body (updated user data)
 
   // Construct the URL of the external endpoint (e.g., the backend you are calling)
-  const externalUrl = `http://localhost:3000/user/${id}`;
+  const externalUrl = `${process.env.BACKEND_URL}/user/${id}`;
 
   try {
     // Make the fetch request to the external API

@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
   const page = searchParams.get("page") || "1";
   const limit = searchParams.get("limit") || "10";
 
-  const backendUrl = `http://localhost:3000/user/search?query=${query}&page=${page}&limit=${limit}`;
+  const backendUrl = `${process.env.BACKEND_URL}/user/search?query=${query}&page=${page}&limit=${limit}`;
 
   try {
     const response = await fetch(backendUrl, {
